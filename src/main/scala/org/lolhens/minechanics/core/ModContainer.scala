@@ -1,6 +1,7 @@
 package org.lolhens.minechanics.core
 
-import cpw.mods.fml.common.{DummyModContainer, ModMetadata}
+import com.google.common.eventbus.EventBus
+import cpw.mods.fml.common.{DummyModContainer, LoadController, ModMetadata}
 import org.lolhens.minechanics.Minechanics
 
 /**
@@ -11,4 +12,9 @@ class ModContainer extends DummyModContainer(new ModMetadata()) {
   metadata.modId = Minechanics.id
   metadata.name = Minechanics.name
   metadata.version = Minechanics.version
+
+  override def registerBus(bus: EventBus, controller: LoadController): Boolean = {
+    bus.register(this)
+    true
+  }
 }
