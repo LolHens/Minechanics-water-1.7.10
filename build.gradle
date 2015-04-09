@@ -91,7 +91,7 @@ publishing {
         maven(MavenPublication) {
             pom.withXml {
                 asNode().dependencies[0].dependency.find {
-                    if (it.groupId[0] == null) it.appendNode('groupId', 'nogroup')
+                    if (it.groupId[0] == null) it.parent().remove(it)
                     false
                 }
             }
