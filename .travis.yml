@@ -1,0 +1,13 @@
+language: java
+jdk:
+- oraclejdk8
+before_install:
+- chmod +x gradlew
+script: "./gradlew publishMavenPublicationToMavenRepository -S"
+env:
+  global:
+  - TERM=dumb
+  - secure: ewnT/JXyhkSHLJK2Ys+2ykzIE9vL5sCJMCCWb+ex7haetn11bjpCp+uHYPfJZH4aCNDpnIM79AoVCd0ZCkSTH7tdJXkZxB7oHoTszlw6pj0vRGgMThaGYTG0jn4xO4Vd5deGbPMJ9mLNr3heeDDIA0Gn4dWK4bF7niiVadcab8Q=
+  - secure: fIB5Liz9t7hyI6DNsAU9u5D/y7ZgapsJ3fZkaAicn3zjA9VoUYDau+mpLa5W2mexZs47VnnKb/yPNnimOtsC8TlXDndiVjf8OL18WzPu7hPpYPD8C/Fp93LvSo+Ugt/8K0k4ur4CQfcGNKBdfgs7HA9gRZyvDBV4X7ivo9RiArk=
+notifications:
+  email: false
