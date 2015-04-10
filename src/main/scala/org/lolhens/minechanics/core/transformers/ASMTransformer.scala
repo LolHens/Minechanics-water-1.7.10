@@ -1,7 +1,7 @@
 package org.lolhens.minechanics.core.transformers
 
 import net.minecraft.launchwrapper.IClassTransformer
-import org.lolhens.minechanics.LogHelper
+import org.lolhens.minechanics.core.transformers.ASMTransformer._
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.{ClassReader, ClassWriter}
 
@@ -11,11 +11,11 @@ import scala.collection.mutable
  * Created by LolHens on 09.04.2015.
  */
 class ASMTransformer extends IClassTransformer {
-  ASMTransformer.registerClassTransformer("net.minecraft.block.BlockDynamicLiquid" -> WaterTransformer)
+  registerMethodTransformer("net.minecraft.block.BlockDynamicLiquid" -> "updateTick" -> WaterTransformer)
 
   override def transform(obfName: String, name: String, bytes: Array[Byte]): Array[Byte] = {
-    ASMTransformer.classTransformers.get(name) match {
-      case Some(transformers) =>LogHelper.fatal(name)
+    classTransformers.get(name) match {
+      case Some(transformers) =>
         val classReader = new ClassReader(bytes)
         val classNode = new ClassNode()
         classReader.accept(classNode, 0)

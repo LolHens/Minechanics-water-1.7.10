@@ -11,7 +11,7 @@ import org.lolhens.minechanics.core.transformers.ASMTransformer
  */
 @IFMLLoadingPlugin.Name(Minechanics.name)
 @IFMLLoadingPlugin.MCVersion(Minechanics.mcVersion)
-@IFMLLoadingPlugin.TransformerExclusions(Array("scala", "org.lolhens.minechanics", "cpw.mods.fml"))
+@IFMLLoadingPlugin.TransformerExclusions(Array("org.lolhens.minechanics"))
 @IFMLLoadingPlugin.SortingIndex(value = 1001)
 class FMLCorePlugin extends IFMLLoadingPlugin {
   override def getASMTransformerClass: Array[String] = Array(classOf[ASMTransformer].getName)
@@ -22,5 +22,5 @@ class FMLCorePlugin extends IFMLLoadingPlugin {
 
   override def getAccessTransformerClass: String = null
 
-  override def getSetupClass: String = classOf[SetupClass].getName
+  override def getSetupClass: String = null //classOf[SetupClass].getName
 }

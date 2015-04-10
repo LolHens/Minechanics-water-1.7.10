@@ -10,5 +10,8 @@ import cpw.mods.fml.relauncher.IFMLCallHook
 class SetupClass extends IFMLCallHook {
   override def injectData(data: util.Map[String, AnyRef]): Unit = {}
 
-  override def call(): Void = null
+  override def call(): Void = {
+
+    null
+  }
 }
