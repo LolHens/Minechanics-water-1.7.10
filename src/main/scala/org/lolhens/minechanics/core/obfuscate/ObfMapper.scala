@@ -8,11 +8,11 @@ import scala.collection.mutable
 object ObfMapper {
   private val obfMap = mutable.Map[String, String]()
 
-  addMapping("updateTick", "func_149674_a")
+  addMapping("func_149674_a", "updateTick")
 
-  def apply(name: String): String = obfMap.get(name) match {
-    case Some(obfName) => obfName
-    case None => name
+  def apply(obfName: String): String = obfMap.get(obfName) match {
+    case Some(name) => obfName
+    case None => obfName
   }
 
   def addMapping(mapping: (String, String)) = obfMap += mapping

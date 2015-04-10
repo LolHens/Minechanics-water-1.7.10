@@ -1,5 +1,6 @@
 package org.lolhens.minechanics.core.transformers
 
+import org.lolhens.minechanics.LogHelper
 import org.lolhens.minechanics.core.obfuscate.ObfMapper
 import org.objectweb.asm.tree.ClassNode
 
@@ -13,12 +14,12 @@ class UniversalClassTransformer extends ClassTransformer {
   private val methodTransformers = mutable.Map[String, mutable.MutableList[MethodTransformer]]()
 
   def registerMethodTransformer(transformer: (String, MethodTransformer)): Unit = {
-    val obfName = ObfMapper(transformer._1)
-    val transformers = methodTransformers.get(obfName) match {
+    val name = transformer._1
+    val transformers = methodTransformers.get(name) match {
       case Some(transformers) => transformers
       case None => {
         val transformers = new mutable.MutableList[MethodTransformer]();
-        methodTransformers += obfName -> transformers
+        methodTransformers += name -> transformers
         transformers
       }
     }
