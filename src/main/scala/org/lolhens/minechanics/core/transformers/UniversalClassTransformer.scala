@@ -1,6 +1,5 @@
 package org.lolhens.minechanics.core.transformers
 
-import org.lolhens.minechanics.LogHelper
 import org.lolhens.minechanics.core.obfuscate.ObfMapper
 import org.objectweb.asm.tree.ClassNode
 
