@@ -1,15 +1,10 @@
 package org.lolhens.minechanics.core.transformers
 
-import java.util
-
-import cpw.mods.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper
 import net.minecraft.launchwrapper.IClassTransformer
-import org.lolhens.minechanics.LogHelper
 import org.lolhens.minechanics.core.transformers.ASMTransformer._
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.{ClassReader, ClassWriter}
 
-import scala.collection.JavaConversions._
 import scala.collection.mutable
 
 /**
@@ -17,15 +12,6 @@ import scala.collection.mutable
  */
 class ASMTransformer extends IClassTransformer {
   registerMethodTransformer("net.minecraft.block.BlockDynamicLiquid" -> "updateTick" -> WaterTransformer)
-
-  LogHelper.fatal("TEST")
-  val field = classOf[FMLDeobfuscatingRemapper].getDeclaredField("fieldNameMaps")
-  field.setAccessible(true)
-  val map = field.get(FMLDeobfuscatingRemapper.INSTANCE).asInstanceOf[util.Map[String, util.Map[String, String]]]
-
-  for (entry <- map.entrySet()) {
-    LogHelper.fatal(entry.getKey)
-  }
 
   override def transform(obfName: String, name: String, bytes: Array[Byte]): Array[Byte] = {
     classTransformers.get(name) match {

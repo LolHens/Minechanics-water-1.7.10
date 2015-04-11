@@ -43,8 +43,8 @@ object WaterTransformer extends MethodTransformer {
         case node: VarInsnNode if (node.getOpcode == Opcodes.ALOAD && node.`var` == 0) =>
           lastAload0 = node
         case node: MethodInsnNode if (node.getOpcode == Opcodes.INVOKESPECIAL && node.owner == "net/minecraft/block/BlockDynamicLiquid" && node.name == "func_149813_h" && node.desc == "(Lnet/minecraft/world/World;IIII)V" && lastAload0 != null) =>
-          i.set(new MethodInsnNode(Opcodes.INVOKESTATIC, "org/lolhens/minechanics/core/hooks/Hooks", "onWaterFlowdown", "(Lnet/minecraft/world/World;IIII)V", false))
-          methodNode.instructions.remove(lastAload0)
+          i.set(new MethodInsnNode(Opcodes.INVOKESTATIC, "org/lolhens/minechanics/core/hooks/Hooks", "onWaterFlowdown", "(Lnet/minecraft/block/Block;Lnet/minecraft/world/World;IIII)V", false))
+          //methodNode.instructions.remove(lastAload0)
           lastAload0 = null
           matches += 1
           if (matches >= 2) return
