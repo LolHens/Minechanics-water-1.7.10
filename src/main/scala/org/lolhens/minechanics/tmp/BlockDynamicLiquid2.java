@@ -1,4 +1,4 @@
-package org.lolhens.minechanics.water;
+package org.lolhens.minechanics.tmp;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -134,6 +134,7 @@ public class BlockDynamicLiquid2 extends BlockLiquid2 {
     }
 
     private void washAway(World world, int x, int y, int z, int meta) {
+        if (blockMaterial == world.getBlock(x, y, z).getMaterial()) return;
         if (this.canWashAway(world, x, y, z)) {
             Block block = world.getBlock(x, y, z);
 
@@ -241,6 +242,7 @@ public class BlockDynamicLiquid2 extends BlockLiquid2 {
 
     private boolean isWaterproof(World world, int x, int y, int z) {
         Block block = world.getBlock(x, y, z);
+        if (block.getMaterial() == this.blockMaterial && world.getBlockMetadata(x, y, z) == 0) return true;
         return block != Blocks.wooden_door && block != Blocks.iron_door && block != Blocks.standing_sign && block != Blocks.ladder && block != Blocks.reeds ? (block.getMaterial() == Material.portal ? true : block.getMaterial().blocksMovement()) : true;
     }
 
@@ -264,6 +266,8 @@ public class BlockDynamicLiquid2 extends BlockLiquid2 {
 
     private boolean canWashAway(World world, int x, int y, int z) {
         Material material = world.getBlock(x, y, z).getMaterial();
+        if (material == this.blockMaterial && world.getBlockMetadata(x, y, z) > 0 && world.getBlockMetadata(x, y, z) < 8)
+            return true;
         return material == this.blockMaterial ? false : (material == Material.lava ? false : !this.isWaterproof(world, x, y, z));
     }
 

@@ -1,4 +1,4 @@
-package org.lolhens.minechanics.water;
+package org.lolhens.minechanics.tmp;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

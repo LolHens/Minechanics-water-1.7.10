@@ -12,6 +12,9 @@ import scala.collection.mutable
  */
 class ASMTransformer extends IClassTransformer {
   registerMethodTransformer("net.minecraft.block.BlockDynamicLiquid" -> "updateTick" -> WaterTransformer)
+  registerMethodTransformer("net.minecraft.block.BlockDynamicLiquid" -> "func_149809_q" -> WaterTransformer)
+  registerMethodTransformer("net.minecraft.block.BlockDynamicLiquid" -> "func_149813_h" -> WaterTransformer)
+  registerMethodTransformer("net.minecraft.block.BlockDynamicLiquid" -> "func_149807_p" -> WaterTransformer)
 
   override def transform(obfName: String, name: String, bytes: Array[Byte]): Array[Byte] = {
     classTransformers.get(name) match {

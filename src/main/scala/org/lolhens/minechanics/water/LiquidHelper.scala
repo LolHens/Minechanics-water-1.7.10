@@ -60,7 +60,7 @@ object LiquidHelper {
     liquids.foreach(liquid => {
       if (liquid match {
         case liquid if (liquid == thisLiquid) => false
-        case liquid if (liquid.yOff == 1) => liquid.falling || thisLiquid.falling
+        case liquid if (liquid.yOff == 1) => true // liquid.falling || thisLiquid.falling
         case liquid => !thisLiquid.falling && (ignoreHeight || liquid.falling || liquid.meta < thisLiquid.meta)
       }) return findSource(liquid.world, liquid.pos._1, liquid.pos._2, liquid.pos._3, material, filter, ignoreHeight, max - 1, used)
     })
