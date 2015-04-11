@@ -1,5 +1,7 @@
 package org.lolhens.minechanics.core.obfuscate
 
+import net.minecraft.block.Block
+
 import scala.collection.mutable
 
 /**
@@ -9,10 +11,25 @@ object ObfMapper {
   private val obfMap = mutable.Map[String, String]()
 
   addMapping("func_149674_a", "updateTick")
+  addMapping("field_149764_J", "blockMaterial")
+  addMapping("func_72805_g", "getBlockMetadata")
+  addMapping("func_149688_o", "getMaterial")
+  addMapping("func_147439_a", "getBlock")
+
+  val deobfuscated = {
+    var found = false
+    for (field <- classOf[Block].getDeclaredFields) if (field.getName == "blockMaterial") found = true
+    found
+  }
 
   def apply(obfName: String): String = obfMap.get(obfName) match {
     case Some(name) => obfName
     case None => obfName
+  }
+
+  def obf(name: String): String = obfMap.find(set => (set._2 == name)) match {
+    case Some(set) if (!deobfuscated) => set._1
+    case _ => name
   }
 
   def addMapping(mapping: (String, String)) = obfMap += mapping

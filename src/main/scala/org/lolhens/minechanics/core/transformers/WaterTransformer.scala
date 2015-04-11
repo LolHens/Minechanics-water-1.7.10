@@ -1,5 +1,6 @@
 package org.lolhens.minechanics.core.transformers
 
+import org.lolhens.minechanics.core.obfuscate.ObfMapper
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.tree._
 
@@ -70,20 +71,20 @@ object WaterTransformer extends MethodTransformer {
         case node: VarInsnNode if (node.getOpcode == Opcodes.ASTORE && node.`var` == 5) =>
           i.add(new VarInsnNode(Opcodes.ALOAD, 5))
           i.add(new VarInsnNode(Opcodes.ALOAD, 0))
-          i.add(new FieldInsnNode(Opcodes.GETFIELD, "net/minecraft/block/BlockDynamicLiquid", "blockMaterial", "Lnet/minecraft/block/material/Material;"))
+          i.add(new FieldInsnNode(Opcodes.GETFIELD, "net/minecraft/block/BlockDynamicLiquid", ObfMapper.obf("blockMaterial"), "Lnet/minecraft/block/material/Material;"))
           val l2 = new LabelNode()
           i.add(new JumpInsnNode(Opcodes.IF_ACMPNE, l2))
           i.add(new VarInsnNode(Opcodes.ALOAD, 1))
           i.add(new VarInsnNode(Opcodes.ILOAD, 2))
           i.add(new VarInsnNode(Opcodes.ILOAD, 3))
           i.add(new VarInsnNode(Opcodes.ILOAD, 4))
-          i.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "net/minecraft/world/World", "getBlockMetadata", "(III)I", false))
+          i.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "net/minecraft/world/World", ObfMapper.obf("getBlockMetadata"), "(III)I", false))
           i.add(new JumpInsnNode(Opcodes.IFLE, l2))
           i.add(new VarInsnNode(Opcodes.ALOAD, 1))
           i.add(new VarInsnNode(Opcodes.ILOAD, 2))
           i.add(new VarInsnNode(Opcodes.ILOAD, 3))
           i.add(new VarInsnNode(Opcodes.ILOAD, 4))
-          i.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "net/minecraft/world/World", "getBlockMetadata", "(III)I", false))
+          i.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "net/minecraft/world/World", ObfMapper.obf("getBlockMetadata"), "(III)I", false))
           i.add(new IntInsnNode(Opcodes.BIPUSH, 8))
           i.add(new JumpInsnNode(Opcodes.IF_ICMPGE, l2))
           i.add(new InsnNode(Opcodes.ICONST_1))
@@ -97,13 +98,13 @@ object WaterTransformer extends MethodTransformer {
   def makeWaterNotAlwaysReplacable(methodNode: MethodNode) = {
     val i = methodNode.instructions.iterator()
     i.add(new VarInsnNode(Opcodes.ALOAD, 0))
-    i.add(new FieldInsnNode(Opcodes.GETFIELD, "net/minecraft/block/BlockDynamicLiquid", "blockMaterial", "Lnet/minecraft/block/material/Material;"))
+    i.add(new FieldInsnNode(Opcodes.GETFIELD, "net/minecraft/block/BlockDynamicLiquid", ObfMapper.obf("blockMaterial"), "Lnet/minecraft/block/material/Material;"))
     i.add(new VarInsnNode(Opcodes.ALOAD, 1))
     i.add(new VarInsnNode(Opcodes.ILOAD, 2))
     i.add(new VarInsnNode(Opcodes.ILOAD, 3))
     i.add(new VarInsnNode(Opcodes.ILOAD, 4))
-    i.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "net/minecraft/world/World", "getBlock", "(III)Lnet/minecraft/block/Block;", false))
-    i.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "net/minecraft/block/Block", "getMaterial", "()Lnet/minecraft/block/material/Material;", false))
+    i.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "net/minecraft/world/World", ObfMapper.obf("getBlock"), "(III)Lnet/minecraft/block/Block;", false))
+    i.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "net/minecraft/block/Block", ObfMapper.obf("getMaterial"), "()Lnet/minecraft/block/material/Material;", false))
     val l1 = new LabelNode()
     i.add(new JumpInsnNode(Opcodes.IF_ACMPNE, l1))
     i.add(new InsnNode(Opcodes.RETURN))
@@ -117,16 +118,16 @@ object WaterTransformer extends MethodTransformer {
       i.next() match {
         case node: VarInsnNode if (node.getOpcode == Opcodes.ASTORE && node.`var` == 5) =>
           i.add(new VarInsnNode(Opcodes.ALOAD, 5))
-          i.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "net/minecraft/block/Block", "getMaterial", "()Lnet/minecraft/block/material/Material;", false))
+          i.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "net/minecraft/block/Block", ObfMapper.obf("getMaterial"), "()Lnet/minecraft/block/material/Material;", false))
           i.add(new VarInsnNode(Opcodes.ALOAD, 0))
-          i.add(new FieldInsnNode(Opcodes.GETFIELD, "net/minecraft/block/BlockDynamicLiquid", "blockMaterial", "Lnet/minecraft/block/material/Material;"))
+          i.add(new FieldInsnNode(Opcodes.GETFIELD, "net/minecraft/block/BlockDynamicLiquid", ObfMapper.obf("blockMaterial"), "Lnet/minecraft/block/material/Material;"))
           val l2 = new LabelNode()
           i.add(new JumpInsnNode(Opcodes.IF_ACMPNE, l2))
           i.add(new VarInsnNode(Opcodes.ALOAD, 1))
           i.add(new VarInsnNode(Opcodes.ILOAD, 2))
           i.add(new VarInsnNode(Opcodes.ILOAD, 3))
           i.add(new VarInsnNode(Opcodes.ILOAD, 4))
-          i.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "net/minecraft/world/World", "getBlockMetadata", "(III)I", false))
+          i.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "net/minecraft/world/World", ObfMapper.obf("getBlockMetadata"), "(III)I", false))
           i.add(new JumpInsnNode(Opcodes.IFNE, l2))
           i.add(new InsnNode(Opcodes.ICONST_1))
           i.add(new InsnNode(Opcodes.IRETURN))
