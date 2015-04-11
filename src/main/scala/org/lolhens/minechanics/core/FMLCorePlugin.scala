@@ -11,7 +11,7 @@ import org.lolhens.minechanics.core.transformers.ASMTransformer
  */
 @IFMLLoadingPlugin.Name(Minechanics.name)
 @IFMLLoadingPlugin.MCVersion(Minechanics.mcVersion)
-@IFMLLoadingPlugin.TransformerExclusions(Array("org.lolhens.minechanics"))
+@IFMLLoadingPlugin.TransformerExclusions(Array("org.lolhens.minechanics", "net.minecraft.world.storage"))
 @IFMLLoadingPlugin.SortingIndex(value = 1001)
 class FMLCorePlugin extends IFMLLoadingPlugin {
   override def getASMTransformerClass: Array[String] = Array(classOf[ASMTransformer].getName)

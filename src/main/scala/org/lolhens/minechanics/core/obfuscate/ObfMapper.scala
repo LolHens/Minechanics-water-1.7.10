@@ -1,6 +1,7 @@
 package org.lolhens.minechanics.core.obfuscate
 
 import net.minecraft.block.Block
+import net.minecraft.world.storage.WorldInfo
 
 import scala.collection.mutable
 
@@ -18,7 +19,7 @@ object ObfMapper {
 
   val deobfuscated = {
     var found = false
-    for (field <- classOf[Block].getDeclaredFields) if (field.getName == "blockMaterial") found = true
+    for (field <- classOf[WorldInfo].getDeclaredFields) if (field.getName == "randomSeed") found = true
     found
   }
 
