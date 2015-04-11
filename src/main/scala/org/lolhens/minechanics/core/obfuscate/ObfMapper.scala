@@ -1,6 +1,7 @@
 package org.lolhens.minechanics.core.obfuscate
 
 import net.minecraft.block.Block
+import net.minecraft.launchwrapper.Launch
 import net.minecraft.world.storage.WorldInfo
 
 import scala.collection.mutable
@@ -17,11 +18,7 @@ object ObfMapper {
   addMapping("func_149688_o", "getMaterial")
   addMapping("func_147439_a", "getBlock")
 
-  val deobfuscated = {
-    var found = false
-    for (field <- classOf[WorldInfo].getDeclaredFields) if (field.getName == "randomSeed") found = true
-    found
-  }
+  val deobfuscated = Launch.blackboard.get("fml.deobfuscatedEnvironment").asInstanceOf[java.lang.Boolean].booleanValue()
 
   def apply(obfName: String): String = obfMap.get(obfName) match {
     case Some(name) => obfName
