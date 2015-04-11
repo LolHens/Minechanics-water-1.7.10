@@ -1,7 +1,10 @@
 package org.lolhens.minechanics.water
 
 
+import java.util.Random
+
 import net.minecraft.block.material.Material
+import net.minecraft.block.{Block, BlockStaticLiquid}
 import net.minecraft.init.Blocks
 import net.minecraft.world.World
 
@@ -62,14 +65,29 @@ object LiquidHelper {
         case liquid if (liquid == thisLiquid) => false
         case liquid if (liquid.yOff == 1) => true // liquid.falling || thisLiquid.falling
         case liquid => !thisLiquid.falling && (ignoreHeight || liquid.falling || liquid.meta < thisLiquid.meta)
-      }) return findSource(liquid.world, liquid.pos._1, liquid.pos._2, liquid.pos._3, material, filter, ignoreHeight, max - 1, used)
+      }) findSource(liquid.world, liquid.pos._1, liquid.pos._2, liquid.pos._3, material, filter, ignoreHeight, max - 1, used) match {
+        case None =>
+        case some => return some
+      }
     })
 
     None
   }
 
+  private val rnd = new Random()
+
   def flowTo(world1: World, x1: Int, y1: Int, z1: Int, world2: World, x2: Int, y2: Int, z2: Int): Unit = {
-    world1.setBlock(x1, y1, z1, Blocks.flowing_water, 1, 1 & 2)
-    world2.setBlock(x2, y2, z2, Blocks.flowing_water, 0, 1 & 2)
+    val water = world1.getBlock(x1, y1, z1) match {
+      case static: BlockStaticLiquid => Block.getBlockById(Block.getIdFromBlock(static) - 1)
+      case dynamic => dynamic
+    }
+    world1.setBlock(x1, y1, z1, water, 1, 1 & 2)
+    world2.setBlock(x2, y2, z2, water, 0, 1 & 2)
+
+    world1.notifyBlocksOfNeighborChange(x1, y1, z1, Blocks.flowing_water)
+    val above = world1.getBlock(x1, y1 + 1, z1)
+    if (above.getMaterial == water.getMaterial) {
+      above.updateTick(world1, x1, y1 + 1, z1, rnd)
+    }
   }
 }
