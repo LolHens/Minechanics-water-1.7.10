@@ -1,5 +1,6 @@
 package org.lolhens.minechanics.core.transformers
 
+import org.lolhens.minechanics.LogHelper
 import org.lolhens.minechanics.core.obfuscate.ObfMapper
 import org.objectweb.asm.tree.ClassNode
 
@@ -31,6 +32,7 @@ class UniversalClassTransformer extends ClassTransformer {
       methodTransformers.get(name) match {
         case Some(transformers) =>
           transformers.foreach(_.transform(name, methodNode))
+          LogHelper.info("Patched method " + name)
         case None =>
       }
     }

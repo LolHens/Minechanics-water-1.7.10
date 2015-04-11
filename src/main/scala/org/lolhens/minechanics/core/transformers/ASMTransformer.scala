@@ -1,6 +1,7 @@
 package org.lolhens.minechanics.core.transformers
 
 import net.minecraft.launchwrapper.IClassTransformer
+import org.lolhens.minechanics.LogHelper
 import org.lolhens.minechanics.core.transformers.ASMTransformer._
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.{ClassReader, ClassWriter}
@@ -24,6 +25,8 @@ class ASMTransformer extends IClassTransformer {
         classReader.accept(classNode, 0)
 
         transformers.foreach(_.transform(name, classNode))
+
+        LogHelper.info("Patched " + name)
 
         val classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES)
         classNode.accept(classWriter)
