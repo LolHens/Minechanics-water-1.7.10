@@ -1,4 +1,4 @@
-package org.lolhens.minechanics.core.hooks
+package org.lolhens.minechanics.handler
 
 import net.minecraft.block.Block
 import net.minecraft.world.World

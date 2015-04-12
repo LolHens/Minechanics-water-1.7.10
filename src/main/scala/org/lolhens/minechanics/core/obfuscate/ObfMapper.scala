@@ -1,9 +1,6 @@
 package org.lolhens.minechanics.core.obfuscate
 
-import net.minecraft.block.Block
 import net.minecraft.launchwrapper.Launch
-import net.minecraft.world.storage.WorldInfo
-import org.lolhens.minechanics.LogHelper
 
 import scala.collection.mutable
 
