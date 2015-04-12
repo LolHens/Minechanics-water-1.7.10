@@ -23,19 +23,23 @@ object WaterTransformer extends MethodTransformer {
     }
   }
 
-  def removeInfiniteSource(methodNode: MethodNode) = {
+  def removeInfiniteSource(methodNode: MethodNode): Unit = {
     val i = methodNode.instructions.iterator()
 
     var lastIconst0: InsnNode = null
+    var matches = 0
 
     while (i.hasNext) {
       i.next() match {
         case node: InsnNode if (node.getOpcode == Opcodes.ICONST_0) =>
           lastIconst0 = node
-        case node: VarInsnNode if (node.getOpcode == Opcodes.ISTORE && node.`var` == 10 && lastIconst0 != null) =>
+        case node: VarInsnNode if (node.getOpcode == Opcodes.ISTORE && lastIconst0 != null) =>
           i.remove()
           methodNode.instructions.remove(lastIconst0)
           lastIconst0 = null
+
+          matches += 1
+          if (matches >= 2) return
         case _ =>
           lastIconst0 = null
       }
@@ -56,6 +60,7 @@ object WaterTransformer extends MethodTransformer {
           i.set(new MethodInsnNode(Opcodes.INVOKESTATIC, "org/lolhens/minechanics/core/hooks/Hooks", "onWaterFlowdown", "(Lnet/minecraft/block/Block;Lnet/minecraft/world/World;IIII)V", false))
           //methodNode.instructions.remove(lastAload0)
           lastAload0 = null
+
           matches += 1
           if (matches >= 2) return
         case _ =>

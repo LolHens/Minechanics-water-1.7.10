@@ -3,6 +3,7 @@ package org.lolhens.minechanics.core.obfuscate
 import net.minecraft.block.Block
 import net.minecraft.launchwrapper.Launch
 import net.minecraft.world.storage.WorldInfo
+import org.lolhens.minechanics.LogHelper
 
 import scala.collection.mutable
 
@@ -21,7 +22,7 @@ object ObfMapper {
   val deobfuscated = Launch.blackboard.get("fml.deobfuscatedEnvironment").asInstanceOf[java.lang.Boolean].booleanValue()
 
   def apply(obfName: String): String = obfMap.get(obfName) match {
-    case Some(name) => obfName
+    case Some(name) => name
     case None => obfName
   }
 
